@@ -5,21 +5,18 @@ export default function productDetails({ product }) {
     const [singleProduct, setSingleProduct] = useState(product);
 
     useEffect(() => {
-        debugger;
         setSingleProduct(product);
     }, [product])
 
     return (
         <>
-            <h1>{singleProduct.title}</h1>
+            <h5>Title: {singleProduct.title}</h5>
         </>
     )
 }
 export async function getStaticPaths() {
     const res = await fetch('https://fakestoreapi.com/products')
     const products = await res.json()
-    debugger;
-
     const paths = products.map((product) => ({
         params: { id: `${product.id}` },
     }))
