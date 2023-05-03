@@ -1,4 +1,7 @@
 import { React, useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from '../../../components/Product/ProductDetails.module.css';
 
 export default function productDetails({ product }) {
   const [singleProduct, setSingleProduct] = useState(product);
@@ -6,14 +9,34 @@ export default function productDetails({ product }) {
   useEffect(() => {
     setSingleProduct(product);
   }, [product]);
-
   return (
-    <h5>
-      {' '}
-      Title:
-      {' '}
-      {singleProduct && singleProduct.title}
-    </h5>
+    <div className={styles.product_container}>
+      <div className={styles.back_button_container}>
+        <Link className={styles.back_button} href="/products">Back to Products</Link>
+      </div>
+      <div className={styles.category}>
+        {singleProduct && singleProduct.category}
+      </div>
+      <div className={styles.info_container}>
+        <div className={styles.image_container}>
+          <Image className={styles.image} role="presentation" loader={() => singleProduct && singleProduct.image} src={singleProduct && singleProduct.image} alt={singleProduct && singleProduct.title} layout="fill" />
+          <div className={styles.price}>
+            Price:
+            {' '}
+            {singleProduct && singleProduct.price}
+            $
+          </div>
+        </div>
+        <div className={styles.text_info}>
+          <div className={styles.title}>
+            {singleProduct && singleProduct.title}
+          </div>
+          <div className={styles.description}>
+            {singleProduct && singleProduct.description}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 export async function getStaticPaths() {
